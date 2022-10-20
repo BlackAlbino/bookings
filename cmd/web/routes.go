@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/BlackAlbino/bookings/pkg/config"
-	"github.com/BlackAlbino/bookings/pkg/handlers"
+	"net/http"
+
+	"github.com/PushAndRun/bookings/pkg/config"
+	"github.com/PushAndRun/bookings/pkg/handlers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"net/http"
 )
 
 func routes(app *config.AppConfig) http.Handler {

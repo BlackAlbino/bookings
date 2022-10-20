@@ -3,12 +3,13 @@ package render
 import (
 	"bytes"
 	"fmt"
-	"github.com/BlackAlbino/bookings/pkg/config"
-	"github.com/BlackAlbino/bookings/pkg/models"
 	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
+
+	"github.com/PushAndRun/bookings/pkg/config"
+	"github.com/PushAndRun/bookings/pkg/models"
 )
 
 var functions = template.FuncMap{}

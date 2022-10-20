@@ -2,16 +2,17 @@ package main
 
 import (
 	"fmt"
-	"github.com/BlackAlbino/bookings/pkg/config"
-	"github.com/BlackAlbino/bookings/pkg/handlers"
-	"github.com/BlackAlbino/bookings/pkg/render"
-	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/PushAndRun/bookings/pkg/config"
+	"github.com/PushAndRun/bookings/pkg/handlers"
+	"github.com/PushAndRun/bookings/pkg/render"
+	"github.com/alexedwards/scs/v2"
 )
 
-const portNumber = ":8080"
+const portNumber = ":8020"
 
 var app config.AppConfig
 var session *scs.SessionManager

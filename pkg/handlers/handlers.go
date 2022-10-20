@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"github.com/BlackAlbino/bookings/pkg/config"
-	"github.com/BlackAlbino/bookings/pkg/models"
-	"github.com/BlackAlbino/bookings/pkg/render"
 	"net/http"
+
+	"github.com/PushAndRun/bookings/pkg/config"
+	"github.com/PushAndRun/bookings/pkg/models"
+	"github.com/PushAndRun/bookings/pkg/render"
 )
 
 // Repo used by the handlers

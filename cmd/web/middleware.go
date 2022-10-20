@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/justinas/nosurf"
 	"net/http"
+
+	"github.com/justinas/nosurf"
 )
 
 func WriteToConsole(next http.Handler) http.Handler {

@@ -1,19 +1,37 @@
 {{template "base" .}}
 
 {{define "content"}}
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h1>The about page</h1>
-                    <p>This is the page that is about abouts...</p>
-                    <p>This came from the template: {{index .StringMap "test"}}</p>
-                    <p>{{if ne (index .StringMap "remote_ip") ""}}
-                    Your remote IP address is:  {{index .StringMap "remote_ip"}}
-                    {{else}}
-                        I dont know your IP address
-                    {{end}}</p>
-                </div>
+    <div class="container">
+
+        <div class="row mt-3">
+            <div class="col">
+                <img src="/static/images/marjors-suite.png" class="img-fluid img-thumbnail mx-auto d-block room-image">
             </div>
         </div>
-        <script src="" async defer></script>
+
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center mt-4">This is going to be the about page</h1>
+                <p>
+                    Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to remember.
+                    Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to remember.
+                    Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to remember.
+                    Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to remember.
+                    Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to remember.
+                    Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to remember.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col text-center">
+
+                <a href="/search-availability" class="btn btn-success">Check availability</a>
+
+            </div>
+        </div>
+
+    </div>
 {{end}}

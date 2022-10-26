@@ -7,6 +7,14 @@
     font-size: 80%;
   }
 
-  .datepicker {
+  .datepicker-picker {
     z-index: 1000000000;
+  }
+
+  .form-control {
+    z-index: 1000000000;
+  }
+
+  .swal2-actions{
+    z-index: 0 !important;
   }

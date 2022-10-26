@@ -36,7 +36,7 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
 	stringMap["remote_ip"] = remoteIP
 
-	render.RenderTemplate(w, "about.page.templ", &models.TemplateData{
+	render.RenderTemplate(w, r, "about.page.templ", &models.TemplateData{
 		StringMap: stringMap,
 	})
 
@@ -45,5 +45,21 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
-	render.RenderTemplate(w, "home.page.templ", &models.TemplateData{})
+	render.RenderTemplate(w, r, "home.page.templ", &models.TemplateData{})
+}
+
+func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "majors.page.templ", &models.TemplateData{})
+}
+
+func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "generals.page.templ", &models.TemplateData{})
+}
+
+func (m *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "search-availability.page.templ", &models.TemplateData{})
+}
+
+func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Posted request!"))
 }

@@ -11,28 +11,62 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <title>My Nice Page</title>
+        <title>Smythe B&B</title>
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
-            integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
 
-        <style>
-            .my-footer {
-                height: 5em;
-                background-color: #163b65;
-                margin-top: 1.5em;
-                padding: 1em;
-                color: white;
-                font-size: 80%;
-            }
-        </style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs4.min.css">
+    
+      <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+    
+      <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+    
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     {{block "css" .}} {{end}}
 
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Smythe B&B</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Rooms
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/generals">General's Quarters</a>
+            <a class="dropdown-item" href="/majors">Major's Suite</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/search-availability">Book now</a>
+        </li>
+        
+      </ul>
+    </div>
+  </nav>
+
 
 {{block "content" .}}
+{{end}}
+
+
+{{block "js" .}}
 {{end}}
 
 <script src="https://unpkg.com/notie"></script>
@@ -48,32 +82,10 @@
   <script>
     let attention = Prompt()
 
-  const elem = document.getElementById('reservation_dates');
-  const rangepicker = new DateRangePicker(elem, {
-  // ...options
-  }); 
-
 
   function notify (msgtype, message){
     notie.alert({type: msgtype, text: message })
   }
-
-      document.getElementById("notifyButton").addEventListener("click",function(){
-    //notify("success", "You were notified!")
-
-    let html = `
-        <form id="check-availability-form" novalidate method="post" action="" class="needs-validation">
-            <div class="form-row" id="check-availability-modal">
-              <input id="start" class="col form-control mr-3" type="text" name="start" placeholder="Arrival" required disabled autocomplete="off">
-              <input id="end" class="col form-control" type="text" name="end" placeholder="Departure" required disabled autocomplete="off">
-            </div>
-      </form>`;
-
-
-    attention.custom({msg: html, title:"Choose your dates"})
-
-    
-  })
 
   function Prompt(){
 

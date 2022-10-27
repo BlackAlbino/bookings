@@ -1,6 +1,9 @@
 package handlers
 
 import (
+	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/PushAndRun/bookings/pkg/config"
@@ -61,5 +64,29 @@ func (m *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) 
 }
 
 func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Posted request!"))
+	start := r.Form.Get("arrival")
+	end := r.Form.Get("departure")
+	w.Write([]byte(fmt.Sprintf("Start date is %s and end date is %s", start, end)))
+}
+
+type jsonResponse struct {
+	OK      bool   `json: "ok"`
+	Message string `json: "message"`
+}
+
+func (m *Repository) PostAvailabilityJson(w http.ResponseWriter, r *http.Request) {
+
+	resp := jsonResponse{
+		OK:      true,
+		Message: "available",
+	}
+
+	out, err := json.MarshalIndent(resp, "", "     ")
+	if err != nil {
+		log.Print(err)
+	}
+
+	log.Print(string(out))
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }

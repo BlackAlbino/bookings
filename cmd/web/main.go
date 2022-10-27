@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/PushAndRun/bookings/pkg/config"
-	"github.com/PushAndRun/bookings/pkg/handlers"
-	"github.com/PushAndRun/bookings/pkg/render"
+	"github.com/PushAndRun/bookings/internal/config"
+	"github.com/PushAndRun/bookings/internal/handlers"
+	"github.com/PushAndRun/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
 

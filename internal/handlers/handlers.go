@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/PushAndRun/bookings/pkg/config"
-	"github.com/PushAndRun/bookings/pkg/models"
-	"github.com/PushAndRun/bookings/pkg/render"
+	"github.com/PushAndRun/bookings/internal/config"
+	"github.com/PushAndRun/bookings/internal/models"
+	"github.com/PushAndRun/bookings/internal/render"
 )
 
 // Repo used by the handlers

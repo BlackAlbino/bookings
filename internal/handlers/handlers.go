@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/PushAndRun/bookings/internal/config"
+	"github.com/PushAndRun/bookings/internal/forms"
 	"github.com/PushAndRun/bookings/internal/models"
 	"github.com/PushAndRun/bookings/internal/render"
 )
@@ -57,6 +58,46 @@ func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
 
 func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "generals.page.templ", &models.TemplateData{})
+}
+
+func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "make-reservation.page.templ", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Print(err)
+		return
+	}
+
+	reservation := models.Reservation{
+		FirstName: r.Form.Get("first_name"),
+		LastName:  r.Form.Get("last_name"),
+		EMail:     r.Form.Get("e-mail"),
+		Phone:     r.Form.Get("phone"),
+	}
+
+	form := forms.New(r.PostForm)
+
+	form.Has("first_name", r)
+	form.Has("last_name", r)
+	form.Has("e-mail", r)
+	form.Has("phone", r)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["reservation"] = reservation
+
+		render.RenderTemplate(w, r, "make-reservation.page.templ", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+
+	}
 }
 
 func (m *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) {

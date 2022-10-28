@@ -87,6 +87,18 @@
     notie.alert({type: msgtype, text: message })
   }
 
+  {{with .Error}}
+    notify("{{.}}", "error")
+    {{end}}
+
+    {{with .Flash}}
+    notify("{{.}}", "success")
+    {{end}}
+
+    {{with .Warning}}
+    notify("{{.}}", "warning")
+    {{end}}
+
   function Prompt(){
 
     let error = function (c) {
@@ -130,7 +142,6 @@
     icon : icon}
     )
     }
-
 
     async function custom (c) {
       const {
@@ -187,6 +198,8 @@
     success: success
     }
   }
+
+
 
 </script>
 

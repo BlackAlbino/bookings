@@ -102,10 +102,30 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
+
+	m.App.Session.Put(r.Context(), "reservation", reservation)
+
+	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
 }
 
 func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "reservation-summary.page.templ", &models.TemplateData{})
+	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
+
+	if !ok {
+		log.Println("Cannot get item from session!")
+		m.App.Session.Put(r.Context(), "error", "Can't find reservation details. Please make a new reservation.")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	m.App.Session.Remove(r.Context(), "reservation")
+
+	data := make(map[string]interface{})
+	data["reservation"] = reservation
+
+	render.RenderTemplate(w, r, "reservation-summary.page.templ", &models.TemplateData{
+		Data: data,
+	})
 }
 
 func (m *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) {

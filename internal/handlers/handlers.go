@@ -61,8 +61,13 @@ func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+	var emptyReservation models.Reservation
+	data := make(map[string]interface{})
+	data["reservation"] = emptyReservation
+
 	render.RenderTemplate(w, r, "make-reservation.page.templ", &models.TemplateData{
 		Form: forms.New(nil),
+		Data: data,
 	})
 }
 
@@ -82,10 +87,9 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 
 	form := forms.New(r.PostForm)
 
-	form.Has("first_name", r)
-	form.Has("last_name", r)
-	form.Has("e-mail", r)
-	form.Has("phone", r)
+	form.Required("first_name", "last_name", "e-mail")
+	form.HasMinLength("last_name", 2, r)
+	form.IsEmail("e-mail")
 
 	if !form.Valid() {
 		data := make(map[string]interface{})
@@ -98,6 +102,10 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
+}
+
+func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "reservation-summary.page.templ", &models.TemplateData{})
 }
 
 func (m *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) {

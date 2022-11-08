@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/PushAndRun/bookings/internal/config"
 	"github.com/PushAndRun/bookings/internal/handlers"
+	"github.com/PushAndRun/bookings/internal/helpers"
 	"github.com/PushAndRun/bookings/internal/models"
 	"github.com/PushAndRun/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
@@ -43,6 +45,12 @@ func run() error {
 	//Change this to true when in production
 	app.InProduction = false
 
+	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
+
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
@@ -64,6 +72,8 @@ func run() error {
 	handlers.NewHandlers(repo)
 
 	render.NewTemplates(&app)
+
+	helpers.NewHelpers(&app)
 
 	fmt.Println(fmt.Sprintf("Starting application on port %s", portNumber))
 

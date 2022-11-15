@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/PushAndRun/bookings/internal/config"
+	"github.com/PushAndRun/bookings/internal/driver"
 	"github.com/PushAndRun/bookings/internal/handlers"
 	"github.com/PushAndRun/bookings/internal/helpers"
 	"github.com/PushAndRun/bookings/internal/models"
@@ -23,10 +24,11 @@ var session *scs.SessionManager
 
 func main() {
 
-	err := run()
+	db, err := run()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer db.SQL.Close()
 
 	srv := &http.Server{
 		Addr:    portNumber,
@@ -38,9 +40,12 @@ func main() {
 
 }
 
-func run() error {
+func run() (*driver.DB, error) {
 	//define whats going to be stored in a session
 	gob.Register(models.Reservation{})
+	gob.Register(models.User{})
+	gob.Register(models.Room{})
+	gob.Register(models.Restriction{})
 
 	//Change this to true when in production
 	app.InProduction = false
@@ -59,19 +64,27 @@ func run() error {
 
 	app.Session = session
 
+	//connect to DB
+	log.Println("Connecting to database")
+	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=bookings user=postgres password=")
+	if err != nil {
+		log.Fatal("Cannot connect to database! Dying...")
+	}
+	log.Println("Connected to dabase!")
+
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("cannot create template cache")
-		return err
+		return nil, err
 	}
 
 	app.TemplateCache = tc
 	app.UseCache = false
 
-	repo := handlers.NewRepo(&app)
+	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
 
-	render.NewTemplates(&app)
+	render.NewRenderer(&app)
 
 	helpers.NewHelpers(&app)
 
@@ -82,5 +95,5 @@ func run() error {
 	//http.HandleFunc("/about", handlers.Repo.About)
 	//_ = http.ListenAndServe(portNumber, nil)
 
-	return nil
+	return db, nil
 }
